@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六國論 - 楚國大臣勸諫遊戲</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background-color: #f5e8c8;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23a0522d" stroke-width="1"/></svg>');
+        }
+        .container {
+            background-color: rgba(255, 248, 225, 0.9);
+            border: 2px solid #8B4513;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #8B0000;
+            text-align: center;
+            border-bottom: 2px solid #8B4513;
+            padding-bottom: 10px;
+        }
+        .scene {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .character {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f9f3e9;
+            border-left: 4px solid #8B4513;
+        }
+        .king {
+            border-left-color: #8B0000;
+        }
+        .minister {
+            border-left-color: #006400;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px;
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #A0522D;
+        }
+        .audio-control {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .speak-btn {
+            background-color: #006400;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option-text {
+            flex: 1;
+        }
+        .option-speak-btn {
+            background-color: #006400;
+            padding: 8px;
+            font-size: 14px;
+            width: 40px;
+        }
+        .ending {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .good-ending {
+            background-color: #e6f7e6;
+            border: 2px solid #006400;
+        }
+        .bad-ending {
+            background-color: #ffe6e6;
+            border: 2px solid #8B0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>六國論 - 楚國大臣勸諫遊戲</h1>
+        
+        <!-- 開始場景 -->
+        <div id="scene1" class="scene active">
+            <div class="character king">
+                <p><strong>楚王：</strong> 秦國很強大，常常打我們楚國。我覺得，不如送金銀珠寶，讓它不要再打。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('秦國很強大，常常打我們楚國。我覺得，不如送金銀珠寶，讓它不要再打。')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="options">
+                <p>你會怎樣回應？</p>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(2)">勸楚王不要送東西給秦國</button>
+                    <button class="option-speak-btn" onclick="speak('勸楚王不要送東西給秦國')">🔊</button>
+                </div>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(3)">同意楚王的決定</button>
+                    <button class="option-speak-btn" onclick="speak('同意楚王的決定')">🔊</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 勸說場景 -->
+        <div id="scene2" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 大王，送東西給秦國不是好辦法。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('大王，送東西給秦國不是好辦法。')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 為什麼不行？秦國很強大，我們不送東西，它會打得更厲害。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('為什麼不行？秦國很強大，我們不送東西，它會打得更厲害。')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="options">
+                <p>你會怎樣繼續勸他？</p>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(4)">說送東西只會讓秦國更貪心</button>
+                    <button class="option-speak-btn" onclick="speak('說送東西只會讓秦國更貪心')">🔊</button>
+                </div>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(5)">提議和其他五國一起對抗秦國</button>
+                    <button class="option-speak-btn" onclick="speak('提議和其他五國一起對抗秦國')">🔊</button>
+                </div>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(6)">提議加強楚國軍隊</button>
+                    <button class="option-speak-btn" onclick="speak('提議加強楚國軍隊')">🔊</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 贊同場景 -->
+        <div id="scene3" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 大王說得對，送東西給秦國是好主意。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('大王說得對，送東西給秦國是好主意。')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 好！就照你說的做。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('好！就照你說的做。')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="ending bad-ending">
+                <h2>遊戲結束</h2>
+                <p>楚國不停送東西給秦國，越來越弱。最後，秦國滅了楚國，統一天下。</p>
+                <p>就像《六國論》說：「送地給秦國，好像加柴救火，柴不燒完，火不會熄。」</p>
+                <button onclick="restartGame()">重新開始遊戲</button>
+            </div>
+        </div>
+        
+        <!-- 引用六國論場景 -->
+        <div id="scene4" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 大王，六國論說：「送地給秦國，好像加柴救火。」今天我們送東西，明天他們會要更多！</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('大王，六國論說：送地給秦國，好像加柴救火。今天我們送東西，明天他們會要更多！')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 你說得有道理...但是不送東西，我們怎麼辦？</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('你說得有道理...但是不送東西，我們怎麼辦？')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="options">
+                <p>你會提議什麼辦法？</p>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(7)">提議和其他五國一起對抗秦國</button>
+                    <button class="option-speak-btn" onclick="speak('提議和其他五國一起對抗秦國')">🔊</button>
+                </div>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(8)">提議加強軍隊，準備打仗</button>
+                    <button class="option-speak-btn" onclick="speak('提議加強軍隊，準備打仗')">🔊</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 聯合五國場景 -->
+        <div id="scene5" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 大王，我們應該和齊、燕、趙、魏、韓五國一起對抗秦國！</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('大王，我們應該和齊、燕、趙、魏、韓五國一起對抗秦國！')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 一起對抗是好，但是各國有自己的想法，很難齊心。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('一起對抗是好，但是各國有自己的想法，很難齊心。')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="options">
+                <p>你會怎樣回應？</p>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(9)">說唇亡齒寒，大家要互相幫助</button>
+                    <button class="option-speak-btn" onclick="speak('說唇亡齒寒，大家要互相幫助')">🔊</button>
+                </div>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(10)">說雖然難，但是也要試試</button>
+                    <button class="option-speak-btn" onclick="speak('說雖然難，但是也要試試')">🔊</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 加強軍事場景 -->
+        <div id="scene6" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 大王，我們應該加強軍隊，訓練士兵，鞏固邊防！</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('大王，我們應該加強軍隊，訓練士兵，鞏固邊防！')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 建軍隊要時間，秦國不會給我們這個時間。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('建軍隊要時間，秦國不會給我們這個時間。')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="options">
+                <p>你會怎樣回應？</p>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(11)">說自強不息很重要</button>
+                    <button class="option-speak-btn" onclick="speak('說自強不息很重要')">🔊</button>
+                </div>
+                <div class="option-item">
+                    <button class="option-text" onclick="nextScene(12)">提議拖住秦國，爭取時間</button>
+                    <button class="option-speak-btn" onclick="speak('提議拖住秦國，爭取時間')">🔊</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 聯合五國成功場景 -->
+        <div id="scene7" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 我們應該和其他五國一起對抗秦國！六國齊心，秦國不敢亂來。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('我們應該和其他五國一起對抗秦國！六國齊心，秦國不敢亂來。')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 好！照你說的做，派使者去各國，一起對付秦國！</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('好！照你說的做，派使者去各國，一起對付秦國！')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="ending good-ending">
+                <h2>成功勸服！</h2>
+                <p>楚王聽你的話，不送東西給秦國，轉而和其他五國一起對抗秦國。</p>
+                <p>楚國保住了國力，繼續存在。</p>
+                <p>就像《六國論》說：「用送給秦國的地封賞謀臣，用服侍秦國的心禮待奇才，一起向西對付秦國，秦國連飯都吃不下。」</p>
+                <button onclick="restartGame()">重新開始遊戲</button>
+            </div>
+        </div>
+        
+        <!-- 加強軍事成功場景 -->
+        <div id="scene11" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 大王，自強不息才是根本！我們應該學越王勾踐，臥薪嘗膽，儲備力量！</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('大王，自強不息才是根本！我們應該學越王勾踐，臥薪嘗膽，儲備力量！')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 你說得對！我決定加強軍隊，訓練士兵，不再送東西給秦國！</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('你說得對！我決定加強軍隊，訓練士兵，不再送東西給秦國！')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="ending good-ending">
+                <h2>成功勸服！</h2>
+                <p>楚王聽你的話，不送東西給秦國，轉而加強軍隊建設。</p>
+                <p>楚國保住了國力，繼續存在。</p>
+                <p>就像《六國論》說：「如果像六國那樣送地給秦國，就連六國都不如。」</p>
+                <button onclick="restartGame()">重新開始遊戲</button>
+            </div>
+        </div>
+        
+        <!-- 失敗場景 -->
+        <div id="scene10" class="scene">
+            <div class="character minister">
+                <p><strong>大臣（你）：</strong> 雖然難，但是我們一定要試！不然秦國會逐個擊破六國。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('雖然難，但是我們一定要試！不然秦國會逐個擊破六國。')">聽大臣講話 🔊</button>
+                </div>
+            </div>
+            <div class="character king">
+                <p><strong>楚王：</strong> 風險太大，我決定送東西給秦國，求暫時和平。</p>
+                <div class="audio-control">
+                    <button class="speak-btn" onclick="speak('風險太大，我決定送東西給秦國，求暫時和平。')">聽楚王講話 🔊</button>
+                </div>
+            </div>
+            <div class="ending bad-ending">
+                <h2>勸服失敗</h2>
+                <p>楚王最終還是選擇送東西給秦國。</p>
+                <p>楚國越來越弱，最後被秦國滅了。</p>
+                <p>就像《六國論》說：「六國滅亡，不是武器不利，打仗不好，弊在送東西給秦國。」</p>
+                <button onclick="restartGame()">重新開始遊戲</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切換場景函數
+        function nextScene(sceneNumber) {
+            // 隱藏所有場景
+            const scenes = document.querySelectorAll('.scene');
+            scenes.forEach(scene => {
+                scene.classList.remove('active');
+            });
+            
+            // 顯示指定場景
+            document.getElementById(`scene${sceneNumber}`).classList.add('active');
+        }
+        
+        // 重新開始遊戲
+        function restartGame() {
+            nextScene(1);
+        }
+        
+        // 語音合成函數（廣東話）
+        function speak(text) {
+            // 檢查瀏覽器是否支持語音合成
+            if ('speechSynthesis' in window) {
+                // 停止當前播放的語音
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // 嘗試設置為廣東話
+                utterance.lang = 'zh-HK';
+                
+                // 設置語速和音調
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                
+                // 播放語音
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('抱歉，您的瀏覽器不支持語音合成功能。');
+            }
+        }
+    </script>
+</body>
+</html>
